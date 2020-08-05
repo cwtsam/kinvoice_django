@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Apr 21 20:50:55 2020
-
-@author: micro
 """
 
 from encoder.params_model import model_embedding_size as speaker_embedding_size
@@ -16,7 +14,7 @@ import librosa
 import argparse
 import torch
 import sys
-
+import os
 
 def maux(output_text, pid, num):
 
@@ -129,7 +127,7 @@ def maux(output_text, pid, num):
     print("Interactive generation loop")
     
     
-    in_fpath = Path("D:/KinVoice/kinvoice_django/mysite/media/samples/U02_sample.wav")
+    in_fpath = Path("D:/KinVoice/kinvoice_django/mysite/media/samples/"+ pid +".wav")
     preprocessed_wav = encoder.preprocess_wav(in_fpath)
     original_wav, sampling_rate = librosa.load(in_fpath)
     preprocessed_wav = encoder.preprocess_wav(original_wav, sampling_rate)
@@ -162,10 +160,15 @@ def maux(output_text, pid, num):
             
             # Play the audio (non-blocking)
 
-                
             # Save it on the disk
+
+    exp_path = "D:/KinVoice/kinvoice_django/mysite/media/"
+
+    if not os.path.exists(exp_path+pid): # if participant folder does not exist
+        os.makedirs(exp_path+pid) # create a folder 
+
     filexpath = "D:/KinVoice/kinvoice_django/mysite/media/reminder_output_%02d.wav" % num
-    fx="reminder_output_%02d" % num
+    fx = "reminder_output_%02d" % num
     print(generated_wav.dtype)
     librosa.output.write_wav(filexpath, generated_wav.astype(np.float32), 
                                      synthesizer.sample_rate)

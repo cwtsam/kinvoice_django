@@ -13,16 +13,16 @@ status_variable = "Null"
 Rem_response = ""
 Rem_source = ""
 
-pid = "" # participant id
-indx = 1 # message index
-txt = "" # message text
+txt = "okay I'll remind you" # message text
+pid = "U02" # participant id
+indx = 1 # message indexs
 
 loop = asyncio.get_event_loop()
 def pushremiders(args1):
     global status_variable
     global Rem_source,Rem_response
     print("asyncio process is going on")
-    asource = demo_cli.maux(args1[1],indx) ## output text and index
+    asource = demo_cli.maux(args1[1],pid,indx) ## output text, participant id and index
     Rem_response = args1[1]
     Rem_source =  asource  
     time.sleep(args1[0])
@@ -31,15 +31,9 @@ def pushremiders(args1):
 def process_text(input): 
     try: 
         if 'remind me' in input:
-        
-            txt = "Okay I'll remind you"
-            
             args1 = [0, txt] # arguments in a list. Time and output text 
-            
             loop.run_in_executor(None, pushremiders, args1) # default loop's executor async
-        
             return txt, "hello"
-        
         else:
             return "Say that again?", "hello"
     except :
@@ -69,7 +63,6 @@ def get_response(request):
         response['status'] = 'ok'
         status_variable = "Null"
         return HttpResponse(json.dumps(response), content_type="application/json")
-            
     else:
         response['error'] = 'no post data found'
 
