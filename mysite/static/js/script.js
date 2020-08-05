@@ -4,9 +4,9 @@ var input = document.getElementById('chat-user');
 var container = document.getElementById('dialogue-container');
 var keywords = [];
 var reply;
-var audiosource;
-var audio;
-var audioPlayer = document.getElementById('audio-player');
+//var audiosource;
+//var audio;
+//var audioPlayer = document.getElementById('audio-player');
 var final_transcript = ''; //final speech transcript made as global variable
 var recognizing = false;
 var ignore_onend;
@@ -23,7 +23,7 @@ window.onload=function(){ //somehow we need to load first or not it will return 
     container = document.getElementById('dialogue-container');
     keywords = [];
     reply;
-	audioPlayer = document.getElementById('audio-player');
+	//audioPlayer = document.getElementById('audio-player');
     form.addEventListener("submit", function(event) {
         event.preventDefault();
         create_bubble_user();
@@ -48,20 +48,20 @@ function create_bubble_user() {
 		chat_respond(input.value).then((json) => {
 
 				reply = json['message']['text'];
-				audio = json['message']['audio'];
-				audiosource = "/media/" + audio + ".wav"
+				//audio = json['message']['audio'];
+				//audiosource = "/media/" + audio + ".wav"
 				remindercheck = json['message']['reminder']; 
 				console.log("async test")
 				console.log(reply)
-				console.log(audiosource);
+				//console.log(audiosource);
 			});
 
 		if (!remindercheck) {
 			setTimeout(function() {
 				create_bubble_bot(reply);
-				audioPlayer.setAttribute('src',audiosource);
-				audioPlayer.load();
-				audioPlayer.play();
+				//audioPlayer.setAttribute('src',audiosource);
+				//audioPlayer.load();
+				//audioPlayer.play();
 			}, 500); // displays alert box after 500 milliseconds, after half a second.
 		}
 		input.value = '';
@@ -127,33 +127,33 @@ function reminder(){
 	if (reminded == false) {
 		chat_respond("remindercheck_false").then((json) => {
 			reply = json['message']['text'];
-			audio = json['message']['audio'];
+			//audio = json['message']['audio'];
 			remindercheck = json['message']['reminder']; 
-			audiosource = "/media/" + audio + ".wav"
+			//audiosource = "/media/" + audio + ".wav"
 			console.log("reminder test reminded false")
 			console.log(reply)
 			console.log(remindercheck)
-			console.log(audiosource);
+			//console.log(audiosource);
 		});
 		if (remindercheck) { //if true
 			setTimeout(function() {
 				create_bubble_bot(reply);
-				audioPlayer.setAttribute('src',audiosource);
-				audioPlayer.load();
-				audioPlayer.play();
+				//audioPlayer.setAttribute('src',audiosource);
+				//audioPlayer.load();
+				//audioPlayer.play();
 				reminded = true;
 			}, 500);
 		}
 	} else {
 		chat_respond("remindercheck_true").then((json) => {
 			reply = json['message']['text'];
-			audio = json['message']['audio'];
+			//audio = json['message']['audio'];
 			remindercheck = json['message']['reminder']; 
-			audiosource = "/media/" + audio + ".wav"
+			//audiosource = "/media/" + audio + ".wav"
 			console.log("reminder test reminded true")
 			console.log(reply)
 			console.log(remindercheck)
-			console.log(audiosource);
+			//console.log(audiosource);
 		});
 		if (remindercheck == false) { //if no reminder
 			reminded = false;
@@ -270,18 +270,18 @@ function create_bubble_user_speech(str) {
 
 		chat_respond(str).then((json) => {
 				reply = json['message']['text'];
-				audio = json['message']['audio'];
-				audiosource = "/media/" + audio + ".wav"
+				//audio = json['message']['audio'];
+				//audiosource = "/media/" + audio + ".wav"
 				console.log("speech input/receive test")
 				console.log(reply)
-				console.log(audiosource);
+				//console.log(audiosource);
 			});
 
 		setTimeout(function() {
 			create_bubble_bot(reply);
-			audioPlayer.setAttribute('src',audiosource);
-			audioPlayer.load();
-			audioPlayer.play();
+			//audioPlayer.setAttribute('src',audiosource);
+			//audioPlayer.load();
+			//audioPlayer.play();
 		}, 500); // displays alert box after 500 milliseconds, after half a second.
 		
 		//str = '';
@@ -316,167 +316,3 @@ var first_char = /\S/;
 function capitalize(s) {
 	return s.replace(first_char, function(m) { return m.toUpperCase(); });
 }
-
-//Polling notes, previous attempts 
-/*
-async function reminders_subscribe(str){
-	var message = {
-			'text': str,
-			'user': true, // message posted from client
-			'chat_bot': false, // gets the text, and indicates that its from user
-		};
-	const response = await fetch("/get-response/", { // fetch response to get json string?
-		body: JSON.stringify({'message': message['text']}), // message that you typed
-		cache: 'no-cache', 
-		credentials: 'same-origin', // indicates that it's not csrf attack?
-		headers: {
-			'user-agent': 'Mozilla/4.0 MDN Example', // specifying that browser should be this
-			'content-type': 'application/json' // specifying this is JSON request
-		},
-		method: 'POST',
-		mode: 'cors', 
-		redirect: 'follow',
-		referrer: 'no-referrer',
-	});
-	return response.json();
-}
-
-//function subscribe(){
-
-async function reminders_subscribe(){
-	try {
-		let response = await fetch("/get-response/", { // fetch response to get json string?
-			body: JSON.stringify({'message': message['text']}), // message that you typed
-			cache: 'no-cache', 
-			credentials: 'same-origin', // indicates that it's not csrf attack?
-			headers: {
-				'user-agent': 'Mozilla/4.0 MDN Example', // specifying that browser should be this
-				'content-type': 'application/json' // specifying this is JSON request
-			},
-			method: 'POST',
-			mode: 'cors', 
-			redirect: 'follow',
-			referrer: 'no-referrer',
-			});
-		if (response.status == 502) {
-		// Connection timeout
-		// happens when the connection was pending for too long
-		console.log("Timeout reached...");
-		// let's reconnect
-		await reminders_subscribe();
-		} else if (response.status != 200) {
-		// Show Error
-		//showMessage(response.statusText);
-		console.log("Error"); //stats: " + response.statusText);
-		// Reconnect in one second
-		await new Promise(resolve => setTimeout(resolve, 1000));
-		await reminders_subscribe();
-		} else {
-		// Got message
-		//let message = await response.text();
-		let data = await response.json();
-		console.log("receiving data");
-		//console.log(data);
-		await reminders_subscribe();
-		}
-	} catch (err) {
-		// catches errors both in fetch and response.json
-		// let's reconnect
-		await reminders_subscribe();
-	}
-}
-*/
-	
-	/*
-	reminders_check(input.value).then((json) => {
-				reply = json['message']['text'];
-				audio = json['message']['audio'];
-				audiosource = "/media/" + audio + ".wav"
-				console.log("async test")
-				console.log(reply)
-				console.log(audiosource);
-			});
-	setTimeout(function() {
-			create_bubble_bot(reply);
-			audioPlayer.setAttribute('src',audiosource);
-			audioPlayer.load();
-			audioPlayer.play();
-		}, 500);
-	*/
-//}
-
-
-// Need to change this to poll every interval. 
-// Polling should occur 
-// 1) when we need to generate audio, not pre-generated [only after user submits text and polls every 1 second?]
-// 2) when waiting for reminders, when a reminder exists.[done every 10 seconds]
-
-/*
-function post_request_response(str){
-	var message = {
-			'text': str,
-			'user': true, // message posted from client
-			'chat_bot': false, // gets the text, and indicates that its from user
-		};
-	fetch("/get-response/", { // fetch response to get json string?
-			body: JSON.stringify({'message': message['text']}), // message that you typed
-			cache: 'no-cache', 
-			credentials: 'same-origin', // indicates that it's not csrf attack?
-			headers: {
-				'user-agent': 'Mozilla/4.0 MDN Example', // specifying that browser should be this
-				'content-type': 'application/json' // specifying this is JSON request
-			},
-			method: 'POST',
-			mode: 'cors', 
-			redirect: 'follow',
-			referrer: 'no-referrer',
-			}) // once fetch request has been completed, it will go to .then requests
-			.then(response => response.json()).then((json) => {
-				reply = json['message']['text'];
-				audio = json['message']['audio'];
-				audiosource = "/media/" + audio + ".wav"
-				console.log("standard chat")
-				console.log(reply)
-				console.log(audiosource);
-			})
-}
-*/
-
-/*
-
-const once = function(checkFn, opts = {}) {
-  return new Promise((resolve, reject) => {
-    const startTime = new Date();
-    const timeout = opts.timeout || 10000;
-    const interval = opts.interval || 100;
-    const timeoutMsg = opts.timeoutMsg || "Timeout!";
-
-    const poll = function() {
-      const ready = checkFn();
-      if (ready) {
-        resolve(ready);
-      } else if ((new Date()) - startTime > timeout) {
-        reject(new Error(timeoutMsg));
-      } else {
-        setTimeout(poll, interval);
-      }
-    }
-    poll();
-  })
-}
-
-async function show_reminder() {
-  await once(
-    () => mockdata.status == 'ready',
-    {interval: 1000, timeout: 30000}
-  )
-  reply = mockdata.value;
-  console.log('Got value: ', reply);
-  setTimeout(function() {
-			create_bubble_bot(reply);
-			//audioPlayer.setAttribute('src',audiosource);
-			//audioPlayer.load();
-			audioPlayer.play();
-		}, 500);
-}
-*/
