@@ -163,12 +163,13 @@ def maux(output_text, pid, num):
             # Save it on the disk
 
     exp_path = "D:/KinVoice/kinvoice_django/mysite/media/"
+    exp_folder = exp_path + pid
 
-    if not os.path.exists(exp_path+pid): # if participant folder does not exist
-        os.makedirs(exp_path+pid) # create a folder 
+    if not os.path.exists(exp_folder): # if participant folder does not exist
+        os.makedirs(exp_folder) # create a folder 
 
-    filexpath = "D:/KinVoice/kinvoice_django/mysite/media/reminder_output_%02d.wav" % num
-    fx = "reminder_output_%02d" % num
+    filexpath = exp_folder + "/m_%02d.wav" % num
+    fx = "m_%02d" % num
     print(generated_wav.dtype)
     librosa.output.write_wav(filexpath, generated_wav.astype(np.float32), 
                                      synthesizer.sample_rate)
