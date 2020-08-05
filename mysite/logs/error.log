@@ -1,0 +1,2 @@
+[Sat May 02 03:40:48.255947 2020] [authz_core:error] [pid 5343:tid 140483154085632] [client 91.203.61.191:34934] AH01630: client denied by server configuration: /home/tamil/django_remindme_model-master/mysite/mysite/wsgi.py
+[Sat May 02 06:29:28.033456 2020] [authz_core:error] [pid 5343:tid 140483383346944] [client 181.44.216.49:52992] AH01630: client denied by server configuration: /home/tamil/django_remindme_model-master/mysite/mysite/wsgi.py

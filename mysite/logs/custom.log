@@ -1,0 +1,2 @@
+91.203.61.191 - - [02/May/2020:03:40:48 +0000] "POST /cgi-bin/mainfunction.cgi HTTP/1.1" 403 435 "-" "XTC"
+181.44.216.49 - - [02/May/2020:06:29:27 +0000] "POST /cgi-bin/mainfunction.cgi HTTP/1.1" 403 435 "-" "XTC"
