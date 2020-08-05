@@ -20,3 +20,5 @@ bin-release/
 
 mysite/trained_model
 mysite/RTVC
+
+!mysite/RTVC/demo_cli.py
