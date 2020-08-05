@@ -2,12 +2,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-#from rest_framework import viewsets
-#from rest_framework.response import Response
-#from rest_framework import status
-#from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
-#from rest_framework.decorators import api_view
 
 from .serializers import ReminderSerializer
 from .models import Reminder
@@ -18,42 +13,14 @@ import random
 import asyncio
 import time
 
-Rem_response = ""
-Rem_source = ""
-
 txt = "okay I'll remind you" # message text
 pid = "U02" # participant id
 indx = "M_1" # message indexs
 
 loop = asyncio.get_event_loop()
-def pushremiders(args1):
-    global status_variable
-    global Rem_source,Rem_response
+def pushremiders():
     print("asyncio process is going on")
-    asource = demo_cli.maux(args1[1],pid,indx) ## output text, participant id and index
-    Rem_response = args1[1]
-    Rem_source =  asource  
-    time.sleep(args1[0])
-    status_variable = "ready"
-
-def process_text(input): 
-    try: 
-        if 'remind me' in input:
-            args1 = [0, txt] # arguments in a list. Time and output text 
-            loop.run_in_executor(None, pushremiders, args1) # default loop's executor async
-            return txt, "hello"
-        else:
-            return "Say that again?", "hello"
-    except :
-        return "Invalid Conversation", "hello"
-
-def Chatbot(text):
-    chatresponse, audio_source = process_text(text)
-    return chatresponse, audio_source
-
-def home(request, template_name="home.html"): ## 'root' directory
-    context = {'title': 'KIN'} ## passes context to template home.html
-    return render(request, template_name, context) ## allow rendering of the home page
+    asource = demo_cli.maux(txt,pid,indx) ## output text, participant id and index
 
 @csrf_exempt
 def get_response(request):
@@ -72,7 +39,9 @@ def get_response(request):
 
         if serializer.is_valid():
             serializer.save()
+            loop.run_in_executor(None, pushremiders) # activates async function to generate audio file
             return JsonResponse(serializer.data, status=201)
+
         return JsonResponse(serializer.errors, status=400)
 
     '''    
@@ -90,7 +59,28 @@ def get_response(request):
     return HttpResponse(json.dumps(response), content_type="application/json") 
     '''
 
-'''      
+'''  
+def process_text(input): 
+    try: 
+        if 'remind me' in input:
+            args1 = [0, txt] # arguments in a list. Time and output text 
+            loop.run_in_executor(None, pushremiders) # default loop's executor async
+            return txt, "hello"
+        else:
+            return "Say that again?", "hello"
+    except :
+        return "Invalid Conversation", "hello"
+
+
+def Chatbot(text):
+    chatresponse, audio_source = process_text(text)
+    return chatresponse, audio_source
+
+
+def home(request, template_name="home.html"): ## 'root' directory
+    context = {'title': 'KIN'} ## passes context to template home.html
+    return render(request, template_name, context) ## allow rendering of the home page
+
 class ReminderViewSet(viewsets.ModelViewSet):
     queryset = Reminder.objects.all().order_by('pid')
     serializer_class = ReminderSerializer
