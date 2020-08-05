@@ -166,8 +166,8 @@ def maux(output_text,num):
 
                 
             # Save it on the disk
-    filexpath = "/home/tamil/django_remindme_model-master/mysite/media/remainder_output_%02d.wav" % num
-    fx="remainder_output_%02d" % num
+    filexpath = "D:/KinVoice/kinvoice_django/mysite/media/reminder_output_%02d.wav" % num
+    fx="reminder_output_%02d" % num
     print(generated_wav.dtype)
     librosa.output.write_wav(filexpath, generated_wav.astype(np.float32), 
                                      synthesizer.sample_rate)
