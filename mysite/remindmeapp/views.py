@@ -42,7 +42,7 @@ def get_response(request):
             pid = data['pid']
             txt = data['txt']
             indx = data['indx']
-            loop.run_in_executor(None, pushremiders)
+            loop.run_in_executor(None, pushremiders) # generate audio files asynchroniously
             return JsonResponse(serializer.data, status=201)
 
         return JsonResponse(serializer.errors, status=400)

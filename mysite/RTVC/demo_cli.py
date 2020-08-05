@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Apr 21 20:50:55 2020
-"""
 
 from encoder.params_model import model_embedding_size as speaker_embedding_size
 from utils.argutils import print_args
