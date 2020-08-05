@@ -18,9 +18,7 @@ import torch
 import sys
 
 
-def maux(output_text,num):
-
-
+def maux(output_text, pid, num):
 
     print("debug -- django")
    

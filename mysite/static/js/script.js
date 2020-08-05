@@ -4,15 +4,10 @@ var input = document.getElementById('chat-user');
 var container = document.getElementById('dialogue-container');
 var keywords = [];
 var reply;
-//var audiosource;
-//var audio;
-//var audioPlayer = document.getElementById('audio-player');
 var final_transcript = ''; //final speech transcript made as global variable
 var recognizing = false;
 var ignore_onend;
 var start_timestamp;
-var remindercheck = false;
-var reminded = false;
 
 window.onload=function(){ //somehow we need to load first or not it will return an error (null)
 	showInfo('info_start');
@@ -28,7 +23,7 @@ window.onload=function(){ //somehow we need to load first or not it will return 
         event.preventDefault();
         create_bubble_user();
 	});
-	check_reminder(); //polling for any reminders
+	//check_reminder(); //polling for any reminders
 }
 
 function create_bubble_user() {
@@ -46,24 +41,15 @@ function create_bubble_user() {
 		count_childs();
 
 		chat_respond(input.value).then((json) => {
-
 				reply = json['message']['text'];
-				//audio = json['message']['audio'];
-				//audiosource = "/media/" + audio + ".wav"
-				remindercheck = json['message']['reminder']; 
 				console.log("async test")
 				console.log(reply)
-				//console.log(audiosource);
 			});
 
-		if (!remindercheck) {
-			setTimeout(function() {
-				create_bubble_bot(reply);
-				//audioPlayer.setAttribute('src',audiosource);
-				//audioPlayer.load();
-				//audioPlayer.play();
-			}, 500); // displays alert box after 500 milliseconds, after half a second.
-		}
+		setTimeout(function() {
+			create_bubble_bot(reply);
+		}, 500); // displays alert box after 500 milliseconds, after half a second.
+		
 		input.value = '';
 	}
 }
@@ -114,49 +100,6 @@ function count_childs() {
 		for (var i = children.length - 4; i >= 0; i--) {
 		transparency -= 0.15;
 		children[i].style.opacity = transparency;
-		}
-	}
-}
-
-function check_reminder(){
-	setInterval(reminder,10000);
-}
-
-function reminder(){
-	console.log("checking reminder")
-	if (reminded == false) {
-		chat_respond("remindercheck_false").then((json) => {
-			reply = json['message']['text'];
-			//audio = json['message']['audio'];
-			remindercheck = json['message']['reminder']; 
-			//audiosource = "/media/" + audio + ".wav"
-			console.log("reminder test reminded false")
-			console.log(reply)
-			console.log(remindercheck)
-			//console.log(audiosource);
-		});
-		if (remindercheck) { //if true
-			setTimeout(function() {
-				create_bubble_bot(reply);
-				//audioPlayer.setAttribute('src',audiosource);
-				//audioPlayer.load();
-				//audioPlayer.play();
-				reminded = true;
-			}, 500);
-		}
-	} else {
-		chat_respond("remindercheck_true").then((json) => {
-			reply = json['message']['text'];
-			//audio = json['message']['audio'];
-			remindercheck = json['message']['reminder']; 
-			//audiosource = "/media/" + audio + ".wav"
-			console.log("reminder test reminded true")
-			console.log(reply)
-			console.log(remindercheck)
-			//console.log(audiosource);
-		});
-		if (remindercheck == false) { //if no reminder
-			reminded = false;
 		}
 	}
 }
@@ -270,11 +213,8 @@ function create_bubble_user_speech(str) {
 
 		chat_respond(str).then((json) => {
 				reply = json['message']['text'];
-				//audio = json['message']['audio'];
-				//audiosource = "/media/" + audio + ".wav"
 				console.log("speech input/receive test")
 				console.log(reply)
-				//console.log(audiosource);
 			});
 
 		setTimeout(function() {
