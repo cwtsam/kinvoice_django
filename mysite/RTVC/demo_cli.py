@@ -168,8 +168,8 @@ def maux(output_text, pid, num):
     if not os.path.exists(exp_folder): # if participant folder does not exist
         os.makedirs(exp_folder) # create a folder 
 
-    filexpath = exp_folder + "/m_%02d.wav" % num
-    fx = "m_%02d" % num
+    filexpath = exp_folder + "/" + num +".wav"
+    fx = num
     print(generated_wav.dtype)
     librosa.output.write_wav(filexpath, generated_wav.astype(np.float32), 
                                      synthesizer.sample_rate)
