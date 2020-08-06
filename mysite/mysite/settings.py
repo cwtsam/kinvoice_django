@@ -16,13 +16,7 @@ import sys
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-#print(BASE_DIR)
-#print(sys.path)
-#PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-#sys.path.append(os.path.join(BASE_DIR, 'RVTC_mock'))
-#print(sys.path)
 sys.path.append(os.path.join(BASE_DIR, 'RTVC'))
-#print(sys.path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -35,6 +29,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+#AWS_ACCESS_KEY_ID = 'ACCESS KEY'
+#AWS_SECRET_ACCESS_KEY = 'SECRET ACCESS KEY'
+#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#AWS_STORAGE_BUCKET_NAME = 'bucket-name'
+#AWS_S3_REGION_NAME = 'eu-west-2'
 
 # Application definition
 
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'remindmeapp',
     'import_export',
+    'storages',
 ]
 
 MIDDLEWARE = [

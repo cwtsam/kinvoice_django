@@ -17,12 +17,7 @@ from pydub import AudioSegment
 AudioSegment.converter = "D:/KinVoice/ffmpeg-20200802-b48397e-win64-static/bin/ffmpeg.exe"
 AudioSegment.ffmpeg = "D:/KinVoice/ffmpeg-20200802-b48397e-win64-static/bin/ffmpeg.exe"
 AudioSegment.ffprobe = "D:/KinVoice/ffmpeg-20200802-b48397e-win64-static/bin/ffprobe.exe"
-#AudioSegment.converter = "D:\KinVoice\ffmpeg-20200802-b48397e-win64-static\bin\ffmpeg.exe"
-#AudioSegment.ffmpeg = "D:\KinVoice\ffmpeg-20200802-b48397e-win64-static\bin\ffmpeg.exe"
-#AudioSegment.ffprobe = "D:\KinVoice\ffmpeg-20200802-b48397e-win64-static\bin\ffprobe.exe"
-#D:\KinVoice\ffmpeg-20200802-b48397e-win64-static\bin
 pydub.AudioSegment.ffmpeg = "D:/KinVoice/ffmpeg-20200802-b48397e-win64-static/bin/ffmpeg.exe"
-
 
 def maux(output_text, pid, num):
 
