@@ -19,6 +19,7 @@ AudioSegment.ffmpeg = "D:/KinVoice/ffmpeg-20200802-b48397e-win64-static/bin/ffmp
 AudioSegment.ffprobe = "D:/KinVoice/ffmpeg-20200802-b48397e-win64-static/bin/ffprobe.exe"
 pydub.AudioSegment.ffmpeg = "D:/KinVoice/ffmpeg-20200802-b48397e-win64-static/bin/ffmpeg.exe"
 
+
 def maux(output_text, pid, num):
 
     print("debug -- django")
@@ -171,16 +172,17 @@ def maux(output_text, pid, num):
     if not os.path.exists(exp_folder): # if participant folder does not exist
         os.makedirs(exp_folder) # create a folder 
 
-    filexpath = exp_folder + "/" + num +".wav"
+    filexpath = exp_folder + "/" + num 
+    wavpath = filexpath + ".wav"
+    mp3path = filexpath + ".mp3"
 
-    fx = num
     print(generated_wav.dtype)
-    librosa.output.write_wav(filexpath, generated_wav.astype(np.float32), 
+    librosa.output.write_wav(wavpath, generated_wav.astype(np.float32), 
                                      synthesizer.sample_rate) # writes wav file
   
-    print("\nSaved output as %s\n\n" % filexpath)
+    print("\nSaved output as %s\n\n" % wavpath)
 
-    AudioSegment.from_wav(filexpath).export(exp_folder+"/"+num+".mp3", format="mp3")
+    AudioSegment.from_wav(wavpath).export(mp3path, format="mp3")
     
-    return fx
+    return mp3path
 
