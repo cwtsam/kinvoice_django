@@ -33,7 +33,8 @@ loop = asyncio.get_event_loop()
 def generate_store():
     print("asyncio process is going on")
     asource = demo_cli.maux(txt,pid,indx) ## output text, participant id and index
-    #uploaded = upload_to_aws(asource, 'djangomediakinvoice', 'test_upload.mp3') # uploading to aws s3 bucket
+    aname = pid +'/'+ indx +'.mp3'
+    uploaded = upload_to_aws(asource, 'djangomediakinvoice', aname) # uploading to aws s3 bucket
 
 @csrf_exempt
 def get_response(request):

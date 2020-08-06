@@ -29,12 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-#AWS_ACCESS_KEY_ID = 'ACCESS KEY'
-#AWS_SECRET_ACCESS_KEY = 'SECRET ACCESS KEY'
-#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-#AWS_STORAGE_BUCKET_NAME = 'djangomediakinvoice'
-#AWS_S3_REGION_NAME = 'eu-west-2'
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -137,6 +131,13 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+#AWS_ACCESS_KEY_ID = 'ACCESS KEY'
+#AWS_SECRET_ACCESS_KEY = 'SECRET ACCESS KEY'
+#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#AWS_STORAGE_BUCKET_NAME = 'djangomediakinvoice'
+#AWS_S3_REGION_NAME = 'eu-west-2'
 
 
 REST_FRAMEWORK = {
