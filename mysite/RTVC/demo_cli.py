@@ -11,6 +11,18 @@ import argparse
 import torch
 import sys
 import os
+import pydub
+from pydub import AudioSegment
+
+AudioSegment.converter = "D:/KinVoice/ffmpeg-20200802-b48397e-win64-static/bin/ffmpeg.exe"
+AudioSegment.ffmpeg = "D:/KinVoice/ffmpeg-20200802-b48397e-win64-static/bin/ffmpeg.exe"
+AudioSegment.ffprobe = "D:/KinVoice/ffmpeg-20200802-b48397e-win64-static/bin/ffprobe.exe"
+#AudioSegment.converter = "D:\KinVoice\ffmpeg-20200802-b48397e-win64-static\bin\ffmpeg.exe"
+#AudioSegment.ffmpeg = "D:\KinVoice\ffmpeg-20200802-b48397e-win64-static\bin\ffmpeg.exe"
+#AudioSegment.ffprobe = "D:\KinVoice\ffmpeg-20200802-b48397e-win64-static\bin\ffprobe.exe"
+#D:\KinVoice\ffmpeg-20200802-b48397e-win64-static\bin
+pydub.AudioSegment.ffmpeg = "D:/KinVoice/ffmpeg-20200802-b48397e-win64-static/bin/ffmpeg.exe"
+
 
 def maux(output_text, pid, num):
 
@@ -165,12 +177,15 @@ def maux(output_text, pid, num):
         os.makedirs(exp_folder) # create a folder 
 
     filexpath = exp_folder + "/" + num +".wav"
+
     fx = num
     print(generated_wav.dtype)
     librosa.output.write_wav(filexpath, generated_wav.astype(np.float32), 
-                                     synthesizer.sample_rate)
+                                     synthesizer.sample_rate) # writes wav file
   
     print("\nSaved output as %s\n\n" % filexpath)
+
+    AudioSegment.from_wav(filexpath).export(exp_folder+"/"+num+".mp3", format="mp3")
     
     return fx
 

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'remindmeapp',
+    'import_export',
 ]
 
 MIDDLEWARE = [
