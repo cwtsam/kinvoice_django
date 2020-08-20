@@ -15,6 +15,7 @@ from botocore.exceptions import NoCredentialsError
 txt = "okay" # message text
 pid = "U02" # participant id
 indx = "M03" # message indexs
+remtime = "2020-05-23T06:35:11.418279Z" # reminder time
 
 def upload_to_aws(local_file, bucket, s3_file):
     s3 = boto3.client('s3')
@@ -32,8 +33,10 @@ def upload_to_aws(local_file, bucket, s3_file):
 loop = asyncio.get_event_loop()
 def generate_store():
     print("asyncio process is going on")
-    asource = demo_cli.maux(txt,pid,indx) ## output text, participant id and index
+    message = 'this is for your reminder at ' + remtime + ' ! ' + txt
+    asource = demo_cli.maux(message,pid,indx) ## output text, participant id and index
     aname = pid +'/'+ indx +'.mp3'
+    print(message)
     uploaded = upload_to_aws(asource, 'djangomediakinvoice', aname) # uploading to aws s3 bucket
 
 @csrf_exempt
@@ -41,6 +44,7 @@ def get_response(request):
     global txt
     global pid
     global indx
+    global remtime
 
     if request.method == 'GET':
         reminders = Reminder.objects.all()
@@ -56,6 +60,7 @@ def get_response(request):
             pid = data['pid']
             txt = data['txt']
             indx = data['indx']
+            remtime = data['remtime']
             loop.run_in_executor(None, generate_store) # generate audio files asynchroniously
             return JsonResponse(serializer.data, status=201)
 

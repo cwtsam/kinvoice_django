@@ -182,7 +182,8 @@ def maux(output_text, pid, num):
   
     print("\nSaved output as %s\n\n" % wavpath)
 
-    AudioSegment.from_wav(wavpath).export(mp3path, format="mp3")
+    AudioSegment.from_wav(wavpath).export(mp3path, format="mp3",  bitrate="48k")
+    print("mp3 created")
     
     return mp3path
 
