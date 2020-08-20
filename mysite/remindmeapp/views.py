@@ -4,8 +4,8 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 
-from .serializers import ReminderSerializer
-from .models import Reminder
+from .serializers import ReminderSerializer, LoggerSerializer
+from .models import Reminder, Logger
 
 from RTVC import demo_cli
 import asyncio
@@ -66,3 +66,25 @@ def get_response(request):
 
         return JsonResponse(serializer.errors, status=400)
 
+@csrf_exempt
+def logging(request):
+
+    if request.method == 'GET':
+        loggeddata = Logger.objects.all()
+        serializer = LoggerSerializer(loggeddata, many=True)
+        return JsonResponse(serializer.data, safe = False)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = LoggerSerializer(data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+            #pid = data['pid']
+            #txt = data['txt']
+            #indx = data['indx']
+            #remtime = data['remtime']
+            #loop.run_in_executor(None, generate_store) # generate audio files asynchroniously
+            return JsonResponse(serializer.data, status=201)
+
+        return JsonResponse(serializer.errors, status=400)
