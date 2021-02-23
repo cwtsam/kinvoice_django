@@ -12,3 +12,5 @@ This API is meant to work with a custom-made Amazon Alexa Skill (a third-party f
 Main Python file for handling API requests and calling on RTVC tool for generating and storing audio:
 mysite/remindmeapp/views.py 
 
+Python file for handling the synthesis of audio:
+mysite/RTVC/demo_cli.py
