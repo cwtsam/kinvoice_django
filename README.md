@@ -9,3 +9,6 @@ This API is meant to work with a custom-made Amazon Alexa Skill (a third-party f
 5. Due to a security safeguard for Alexa development, the Echo does not allow the synthesised audio file to be played when the reminder is issued. Thus, when the reminder is issued, the Echo Dot announces there is a reminder for them and asks the user to play the reminder message. 
 6. Finally, the Echo plays the reminder audio file from the S3 database when the user asks and could be played at any time after the reminder is issued, until the next reminder is issued.
 
+Main Python file for handling API requests and calling on RTVC tool for generating and storing audio:
+mysite/remindmeapp/views.py 
+
