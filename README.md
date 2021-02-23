@@ -14,3 +14,12 @@ mysite/remindmeapp/views.py
 
 Python file for handling the synthesis of audio:
 mysite/RTVC/demo_cli.py
+
+To use this repo:
+1. Clone this project
+2. Clone RTVC tool repo (https://github.com/CorentinJ/Real-Time-Voice-Cloning) and follow their instructions on downloading and adding the pretrained models.
+3. Add contents of the RTVC repo into this project's mysite/RTVC/ folder. Do not replace (keep) this repo's demo_cli.py file.
+4. Create your own S3 bucket and update mysite/remindmeapp/views.py with keys for your own S3 bucket
+5. Update directories to your own local directories in mysite/RTVC/demo_cli.py.
+
+[To-do: Write better instructions on how to use the repo]
