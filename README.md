@@ -2,7 +2,7 @@
 
 This is made as part of a project to investigate the "cloning" of voices of friends/relatives to use with voice interfaces in potentially useful applications such as issuing reminders in your friends/relatives ('kin'). Inspired from the idea that we could feel more receptive and comforted when hearing close friends/relatives' voices.
 
-This API is meant to work with a custom-made Amazon Alexa Skill (a third-party feature that can be installed and accessed via Amazon Echo devices). This Skill enables users to set reminders, issues the reminders to users and plays the reminder audio in the voice of the user’s kin. 
+This API is meant to work with a custom-made Amazon Alexa Skill, a third-party feature that can be installed and accessed via Amazon Echo devices (https://github.com/cwtsam/kin_alexa_skill). This Skill enables users to set reminders, issues the reminders to users and plays the reminder audio in the voice of the user’s kin. 
 1. Whenever a reminder is set through the Skill, it retrieves information on the reminder message, day, and time from the user. 
 2. The reminder data is posted to this API that is hosted on a Google Cloud server. 
 3. The API generates the reminder message as an audio file in a kin voice based on a speech recording sample of the user’s kin using the Real-Time Voice Cloning (RTVC) tool developed by Jemine et al. (https://github.com/CorentinJ/Real-Time-Voice-Cloning) and uploads the file to an Amazon S3 bucket database.
